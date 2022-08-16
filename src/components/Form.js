@@ -43,7 +43,7 @@ const style = {
   },
 };
 export default function Form() {
-  const colors = ["#25A575", "#2595A5", "#3A719B", '#254B7A', "#142B58"];
+  const colors = ["#25A575", "#2595A5", "#3A719B", "#254B7A", "#142B58"];
   const validationSchema = yup.object({
     firstName: yup.string().required("first name is required").min(3),
     lastName: yup.string().required("last name is required"),
@@ -59,7 +59,7 @@ export default function Form() {
       .email("Enter a valid email")
       .required("email is required"),
     address: yup.string().max(100).required("address is required"),
-    notes: yup.string().max(100),
+    notes: yup.string().max(100).required("notes/reason is required"),
   });
   const [referrals, setReferrals] = useState([]);
   const [type, setType] = useState("text");
@@ -109,12 +109,12 @@ export default function Form() {
   };
 
   const deleteItem = (i) => {
-    console.log('idex', i);
+    console.log("idex", i);
     let items = [...referrals];
-    items.splice(i,1);
+    items.splice(i, 1);
     setReferrals(items);
-    console.log('reff', referrals);
-  }
+    console.log("reff", referrals);
+  };
 
   return (
     <>
@@ -144,12 +144,17 @@ export default function Form() {
                       >
                         {row.firstName + " " + row.lastName}
                       </Grid>
-                      <Grid 
+                      <Grid
                         item
                         xs={1}
                         align="right"
-                        style={{ paddingTop: "10px", paddingLeft: "5px" }}>
-                          <DeleteOutline onClick={()=>{deleteItem(i)}}/>
+                        style={{ paddingTop: "10px", paddingLeft: "5px" }}
+                      >
+                        <DeleteOutline
+                          onClick={() => {
+                            deleteItem(i);
+                          }}
+                        />
                       </Grid>
                     </Grid>
                   </Grid>
@@ -174,7 +179,7 @@ export default function Form() {
             address: "",
             notes: "",
           });
-          setAddress('');
+          setAddress("");
           // console.log('works');
         }}
       >
@@ -473,6 +478,8 @@ export default function Form() {
                       placeholder="Notes/Reason"
                       variant="standard"
                       name="notes"
+                      helperText={touched.lastName && errors.lastName}
+                      error={touched.lastName && !!errors.lastName}
                       onChange={handleChange}
                       value={values.notes}
                     />
