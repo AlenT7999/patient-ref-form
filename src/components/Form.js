@@ -79,6 +79,7 @@ export default function Form() {
               `Success! You have submitted ${referrals.length} pending requests. You will be notified once they've been approved`
             );
             setOpen(true);
+            setReferrals([]);
           } else {
             setMessage(message);
             setAlertColor("error");
